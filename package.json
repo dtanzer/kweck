@@ -7,6 +7,10 @@
     "react-dom": "^16.11.0",
     "react-scripts": "3.2.0"
   },
+  "devDependencies": {
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
