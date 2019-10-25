@@ -1,13 +1,21 @@
 import React from 'react';
 
-export function Timer() {
-	return (
-		<svg viewBox="-1.1 -1.1 2.2 2.2" width="400" height="400">
-			<Background />
-			<Slice />
-			<Foreground />
-		</svg>
-	);
+export const Timer = createTimer();
+
+export function percentFrom() {
+
+}
+
+export function createTimer(timeToPercentage = percentFrom) {
+	return ({ startMins=10, startSecs=0 }) => {
+		return (
+			<svg viewBox="-1.1 -1.1 2.2 2.2" width="400" height="400">
+				<Background />
+				<Slice percentLeft={timeToPercentage(startMins, startSecs)}/>
+				<Foreground />
+			</svg>
+		);
+	};
 }
 
 export function Background() {
@@ -26,7 +34,7 @@ function segmentTo() {
 
 export function createSlice(circleSegment = segmentTo) {
 	return ({percentLeft}) => {
-		const [arcX, arcY] = circleSegment(parseFloat(percentLeft));
+		const [arcX, arcY] = circleSegment(percentLeft);
 		const pathData = `M 0 -1 A 1 1 0 0 1 ${arcX} ${arcY} L 0 0`;
 		return <path d={pathData} />
 	};

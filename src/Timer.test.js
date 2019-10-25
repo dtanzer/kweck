@@ -1,5 +1,5 @@
 import React from 'react';
-import { Timer, Background, Foreground, Slice, createSlice } from './Timer';
+import { Timer, Background, Foreground, Slice, createSlice, createTimer } from './Timer';
 
 import { shallow, mount, render } from 'enzyme';
 import sinon from 'sinon';
@@ -18,6 +18,20 @@ describe('Component <Timer/> rendering', () => {
 			const timer = shallow(<Timer/>);
 			expect(timer.find(Slice)).toHaveLength(1);
 		});
+		it('passes percentLeft to slice when timer is not running', () => {
+			const timeToPercentage = sinon.fake.returns(17.34);
+
+			const TimerComp = createTimer(timeToPercentage);
+			const timer = shallow(<TimerComp/>);
+			expect(timer.find(Slice).prop('percentLeft')).toEqual(17.34);
+		});
+		it('passes the current time left to timeToPercentage', () => {
+			const timeToPercentage = sinon.fake.returns(0);
+
+			const TimerComp = createTimer(timeToPercentage);
+			const timer = shallow(<TimerComp startMins={6} startSecs={12.5} />);
+			expect(timeToPercentage.calledWith(6, 12.5)).toEqual(true);
+		});
 	});
 
 	describe('<Slice/>', () => {
@@ -32,7 +46,7 @@ describe('Component <Timer/> rendering', () => {
 		it('passes the current percentage to circleSegment', () => {
 			const circleSegment = sinon.fake.returns([0, 0]);
 			const SliceComp = createSlice(circleSegment);
-			const slice = shallow(<SliceComp percentLeft="34.2"/>);
+			const slice = shallow(<SliceComp percentLeft={34.2} />);
 
 			expect(circleSegment.calledWith(34.2)).toEqual(true);
 		});
