@@ -1,10 +1,7 @@
 import React from 'react';
+import { percentFrom, segmentTo } from './segment';
 
 export const Timer = createTimer();
-
-export function percentFrom() {
-
-}
 
 export function createTimer(timeToPercentage = percentFrom) {
 	return ({ startMins=10, startSecs=0 }) => {
@@ -27,10 +24,6 @@ export function Foreground() {
 }
 
 export const Slice = createSlice();
-
-function segmentTo() {
-	return [0, -1];
-}
 
 export function createSlice(circleSegment = segmentTo) {
 	return ({percentLeft}) => {
