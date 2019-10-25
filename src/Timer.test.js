@@ -21,11 +21,20 @@ describe('Component <Timer/> rendering', () => {
 	});
 
 	describe('<Slice/>', () => {
-		const circleSegment = sinon.fake.returns([12.5, 18.3]);
-		const SliceComp = createSlice(circleSegment);
-		const slice = shallow(<SliceComp />);
+		it('draws the pie slice with data from circleSegment', () => {
+			const circleSegment = sinon.fake.returns([12.5, 18.3]);
+			const SliceComp = createSlice(circleSegment);
+			const slice = shallow(<SliceComp />);
 
-		expect(slice.find('path')).toHaveLength(1);
-		expect(slice.find('path').at(0).prop('d')).toEqual('M 0 -1 A 1 1 0 0 1 12.5 18.3 L 0 0');
+			expect(slice.find('path')).toHaveLength(1);
+			expect(slice.find('path').at(0).prop('d')).toEqual('M 0 -1 A 1 1 0 0 1 12.5 18.3 L 0 0');
+		});
+		it('passes the current percentage to circleSegment', () => {
+			const circleSegment = sinon.fake.returns([0, 0]);
+			const SliceComp = createSlice(circleSegment);
+			const slice = shallow(<SliceComp percentLeft="34.2"/>);
+
+			expect(circleSegment.calledWith(34.2)).toEqual(true);
+		});
 	});
 });

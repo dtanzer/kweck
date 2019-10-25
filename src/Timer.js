@@ -25,8 +25,8 @@ function segmentTo() {
 }
 
 export function createSlice(circleSegment = segmentTo) {
-	return () => {
-		const [arcX, arcY] = circleSegment();
+	return ({percentLeft}) => {
+		const [arcX, arcY] = circleSegment(parseFloat(percentLeft));
 		const pathData = `M 0 -1 A 1 1 0 0 1 ${arcX} ${arcY} L 0 0`;
 		return <path d={pathData} />
 	};
