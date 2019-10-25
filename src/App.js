@@ -1,9 +1,13 @@
 import React from 'react';
 import './App.css';
 import { Config } from './Config';
+import { Timer } from './Timer';
 
 export function App() {
 	return (
-		<Config />
+		<div>
+			<Config />
+			<Timer />
+		</div>
 	);
 }
