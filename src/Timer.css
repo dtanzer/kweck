@@ -1,0 +1,15 @@
+.timer .slice {
+	fill: red;
+	stroke: none;
+}
+
+.timer .background {
+	stroke: none;
+	fill: white;
+}
+
+.timer .foreground {
+	stroke: black;
+	stroke-width: 0.02;
+	fill: none;
+}
