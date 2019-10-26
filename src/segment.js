@@ -5,6 +5,7 @@ export function percentFrom(mins, secs) {
 	return (seconds / secondsInHour) * 100;
 }
 
-export function segmentTo() {
-	return [0, -1];
+export function segmentTo(percentage) {
+	const angle = 2*Math.PI*percentage/100;
+	return [-Math.sin(angle), -Math.cos(angle)];
 }

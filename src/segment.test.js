@@ -14,4 +14,24 @@ describe('segment', () => {
 		});
 	});
 
+	describe('segmentTo', () => {
+		it('returns the topmost point of the circle for 0%', () => {
+			const [x, y] = segmentTo(0);
+
+			expect(x).toBeCloseTo(0);
+			expect(y).toBeCloseTo(-1);
+		});
+		it('returns the bottommost point of the circle for 50%', () => {
+			const [x, y] = segmentTo(50);
+
+			expect(x).toBeCloseTo(0);
+			expect(y).toBeCloseTo(1);
+		});
+		it('returns the leftmmost point of the circle for 25%', () => {
+			const [x, y] = segmentTo(25);
+
+			expect(x).toBeCloseTo(-1);
+			expect(y).toBeCloseTo(0);
+		});
+	});
 });

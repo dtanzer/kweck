@@ -41,7 +41,7 @@ describe('Component <Timer/> rendering', () => {
 			const slice = shallow(<SliceComp />);
 
 			expect(slice.find('path')).toHaveLength(1);
-			expect(slice.find('path').at(0).prop('d')).toEqual('M 0 -1 A 1 1 0 0 1 12.5 18.3 L 0 0');
+			expect(slice.find('path').at(0).prop('d')).toEqual('M 12.5 18.3 A 1 1 0 0 1 0 -1 L 0 0');
 		});
 		it('passes the current percentage to circleSegment', () => {
 			const circleSegment = sinon.fake.returns([0, 0]);
