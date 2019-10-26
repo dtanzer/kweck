@@ -1,5 +1,9 @@
 import React from 'react';
 
-export function Config() {
-	return <div>Config</div>
+export function Config({startTimer}) {
+	return (
+		<div>
+			<a className="start-timer" href="#" onClick={startTimer()}>Start</a>
+		</div>
+	);
 }
