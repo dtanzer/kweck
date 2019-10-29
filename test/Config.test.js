@@ -26,4 +26,39 @@ describe('<Config/>', () => {
 		sinon.assert.called(stopTimer);
 		expect(stopTimer.getCall(0).args[0]).to.equal(17);
 	});
+
+	it('shows the remaining time, calculated by a helper function, after pressing start', () => {
+		const startTimer = sinon.stub();
+		const calcRemaining = () => { return { mins: 11, secs: 7 }; };
+		const config = shallow(<Config startTimer={startTimer} calcRemaining={calcRemaining} />);
+
+		config.find('.start-timer').simulate('click');
+
+		expect(config.find('.remaining-mins').text()).to.equal('11');
+		expect(config.find('.remaining-secs').text()).to.equal('07');
+	});
+
+	it('passes the remaining milliseconds to the helper function', () => {
+		const startTimer = sinon.stub();
+		const calcRemaining = sinon.fake.returns({ mins: 11, secs: 7 });
+		const config = shallow(<Config startTimer={startTimer} calcRemaining={calcRemaining} />);
+
+		config.find('.start-timer').simulate('click');
+
+		sinon.assert.calledWith(calcRemaining, 10*60*1000);
+	});
+
+	it('passes the elapsed time to the timer helper function on after a tick', () => {
+		const startTimer = sinon.stub();
+		const delta = 60;
+		const currentTime = sinon.fake.returns(delta);
+		const calcRemaining = sinon.fake.returns({ mins: 11, secs: 7 });
+		const config = mount(<Config startTimer={startTimer} calcRemaining={calcRemaining} currentTime={currentTime} />);
+
+		config.find('.start-timer').simulate('click');
+		const timerCallback = startTimer.getCall(0).args[0];
+		timerCallback();
+
+		sinon.assert.calledWith(calcRemaining, 10*60*1000-delta);
+	});
 });
