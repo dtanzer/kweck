@@ -4,12 +4,12 @@ import { Config } from './Config';
 import { Timer } from './Timer';
 
 export function App() {
-	const [ timerState, setTimerState ] = useState('stopped');
+	const [ time, setTime ] = useState({ mins: 10, secs: 0 });
 
 	return (
 		<div>
-			<Config startTimer={()=> setTimerState('running')} />
-			<Timer state={timerState} />
+			<Config setRemainingTime={setTime} />
+			<Timer time={time} />
 		</div>
 	);
 }

@@ -15,16 +15,8 @@ describe('<App/>', () => {
 		const app = shallow(<App />);
 		expect(app.find(Timer)).to.have.length(1);
 	});
-	it('passes running state to the timer', () => {
+	it('passes remaining time to the timer', () => {
 		const app = shallow(<App />);
-		expect(app.find(Timer).prop('state')).to.equal('stopped');
-	});
-	it('passes a callback to change the running state to "running" to the config panel', () => {
-		const app = shallow(<App />);
-		const startTimer = app.find(Config).prop('startTimer');
-
-		expect(startTimer).to.exist;
-		startTimer();
-		expect(app.find(Timer).prop('state')).to.equal('running');
+		expect(app.find(Timer).prop('time')).to.deep.equal({ mins: 10, secs: 0 });
 	});
 });
