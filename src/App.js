@@ -8,8 +8,7 @@ export function App() {
 
 	return (
 		<div>
-			<Config setRemainingTime={setTime} />
-			<Timer time={time} />
+			<Timer />
 		</div>
 	);
 }

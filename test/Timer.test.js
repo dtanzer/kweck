@@ -1,11 +1,16 @@
 import React from 'react';
 import { Timer, Background, Foreground, Slice, createSlice, createTimer } from '../src/Timer';
+import { Config } from '../src/Config';
 
 import { shallow, mount, render } from 'enzyme';
 import sinon from 'sinon';
 
 describe('Component <Timer/> rendering', () => {
 	describe('<Timer/>', () => {
+		it('renders the config panel', () => {
+			const timer = shallow(<Timer />);
+			expect(timer.find(Config)).to.have.length(1);
+		});
 		it('renders the timer background', () => {
 			const timer = shallow(<Timer/>);
 			expect(timer.find(Background)).to.have.length(1);

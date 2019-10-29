@@ -13,7 +13,7 @@ export function Config({startTimer = setInterval,
 		stopTimer = clearInterval, 
 		calcRemaining=calculateRemainingTime,
 		currentTime=Date.now,
-		setRemainingTime,
+		setRemainingTime=()=>{},
 	}) {
 	const [runningInterval, setRunningInterval] = useState(null);
 	const [countDownFrom, setCountDownFrom] = useState(10*60*1000);
