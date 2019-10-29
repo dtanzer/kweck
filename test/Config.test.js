@@ -6,6 +6,28 @@ import sinon from 'sinon';
 
 describe('Config component', () => {
 	describe('<Config/>', () => {
+		//The new config should just report the remaining time and the running status back to the parent...
+		it('passes the initial mins and secs back to the parent via a callback immediately', () => {
+			const startTimer = sinon.stub();
+			const setRemainingTime = sinon.stub();
+
+			const config = shallow(<Config startTimer={startTimer} setRemainingTime={setRemainingTime} />);
+
+			sinon.assert.calledWith(setRemainingTime, 10, 0);
+		});
+
+		it('calls setRunningStatus when start was pressed', () => {
+			const startTimer = sinon.stub();
+			const setRunningStatus = sinon.stub();
+			const config = shallow(<Config startTimer={startTimer} setRemainingTime={()=>{}} setRunningStatus={setRunningStatus} />);
+
+			config.find('.start-timer').simulate('click');
+
+			sinon.assert.calledWith(setRunningStatus, 'running');
+		});
+
+		//I want to move the whole timer logic one component up, so those tests will soon be
+		//in the wrong place. I'll keep them for now to keep things green.
 		it('registeres a callback for timer ticks when start is pressed', () => {
 			const startTimer = sinon.stub();
 			const config = shallow(<Config startTimer={startTimer} setRemainingTime={()=>{}} />);

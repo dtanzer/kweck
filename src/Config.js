@@ -14,6 +14,7 @@ export function Config({startTimer = setInterval,
 		calcRemaining=calculateRemainingTime,
 		currentTime=Date.now,
 		setRemainingTime=()=>{},
+		setRunningStatus=()=>{},
 	}) {
 	const [runningInterval, setRunningInterval] = useState(null);
 	const [countDownFrom, setCountDownFrom] = useState(10*60*1000);
@@ -24,6 +25,9 @@ export function Config({startTimer = setInterval,
 		setTime(currentTime());
 	};
 	const onStartClicked = () => {
+		setRunningStatus('running');
+
+		//old code, most of this should be moved to parent.
 		if(runningInterval != null) {
 			stopTimer(runningInterval);
 		}
