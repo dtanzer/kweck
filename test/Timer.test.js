@@ -38,6 +38,15 @@ describe('Component <Timer/> rendering', () => {
 			const timer = shallow(<TimerComp />);
 			expect(timeToPercentage.calledWith(6, 12.5)).to.equal(true);
 		});
+
+		it('passes the current time left to <Config />', () => {
+			const timeToPercentage = sinon.fake.returns(0);
+
+			const TimerComp = createTimer(timeToPercentage, ()=>{}, ()=>{ return {mins: 6, secs: 12.5, };});
+			const timer = shallow(<TimerComp />);
+			
+			expect(timer.find(Config).prop('remaining')).to.deep.equal({mins: 6, secs: 12.5, });
+		});
 		it('passes the running state to config when timer is stopped', () => {
 			const timer = shallow(<Timer />);
 			expect(timer.find(Config).prop('status')).to.equal('stopped');

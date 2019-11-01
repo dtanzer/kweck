@@ -36,7 +36,7 @@ export function createTimer(timeToPercentage = percentFrom, startTimer = setInte
 		const { mins, secs } = calcTime();
 
 		return [
-			<Config startTimer={onStart} status={runningState} />,
+			<Config startTimer={onStart} status={runningState} remaining={{mins, secs}} />,
 
 			<svg className="timer" viewBox="-1.1 -1.1 2.2 2.2" width="400" height="400">
 				<Background />
