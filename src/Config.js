@@ -14,7 +14,9 @@ export function Config({startTimer = setInterval,
 		calcRemaining=calculateRemainingTime,
 		currentTime=Date.now,
 		setRemainingTime=()=>{},
+
 		setRunningStatus=()=>{},
+		remaining={mins: 11, secs: 7}
 	}) {
 	const [runningInterval, setRunningInterval] = useState(null);
 	const [countDownFrom, setCountDownFrom] = useState(10*60*1000);
@@ -39,12 +41,14 @@ export function Config({startTimer = setInterval,
 
 	const { mins, secs } = calcRemaining(countDownFrom - (time - startTime));
 	setRemainingTime(mins, secs);
+	//{mins.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}
+	//{Math.floor(secs).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}
 	return (
 		<div>
 			<div>
-				<span className="remaining-mins">{mins.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}</span>
+				<span className="remaining-mins">{remaining.mins.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}</span>
 				:
-				<span className="remaining-secs">{Math.floor(secs).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}</span>
+				<span className="remaining-secs">{Math.floor(remaining.secs).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}</span>
 			</div>
 			<a className="start-timer" href="#" onClick={onStartClicked}>Start</a>
 		</div>

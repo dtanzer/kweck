@@ -26,6 +26,26 @@ describe('Config component', () => {
 			sinon.assert.calledWith(setRunningStatus, 'running');
 		});
 
+		it('shows the remaining time, as passed in from the parent, when the timer is running', () => {
+			const startTimer = sinon.stub();
+			const setRemainingTime = sinon.stub();
+
+			const config = shallow(<Config startTimer={startTimer} setRemainingTime={setRemainingTime} remaining={{mins: 8, secs: 5}} status="running" />);
+
+			expect(config.find('.remaining-mins').text()).to.equal('08');
+			expect(config.find('.remaining-secs').text()).to.equal('05');
+		});
+
+		it('shows the remaining seconds without msec when the timer is running', () => {
+			const startTimer = sinon.stub();
+			const setRemainingTime = sinon.stub();
+
+			const config = shallow(<Config startTimer={startTimer} setRemainingTime={setRemainingTime} remaining={{mins: 8, secs: 3.2}} status="running" />);
+
+			expect(config.find('.remaining-mins').text()).to.equal('08');
+			expect(config.find('.remaining-secs').text()).to.equal('03');
+		});
+
 		//I want to move the whole timer logic one component up, so those tests will soon be
 		//in the wrong place. I'll keep them for now to keep things green.
 		it('registeres a callback for timer ticks when start is pressed', () => {
@@ -48,28 +68,6 @@ describe('Config component', () => {
 
 			sinon.assert.called(stopTimer);
 			expect(stopTimer.getCall(0).args[0]).to.equal(17);
-		});
-
-		it('shows the remaining time, calculated by a helper function, after pressing start', () => {
-			const startTimer = sinon.stub();
-			const calcRemaining = () => { return { mins: 11, secs: 7 }; };
-			const config = shallow(<Config startTimer={startTimer} calcRemaining={calcRemaining} setRemainingTime={()=>{}} />);
-
-			config.find('.start-timer').simulate('click');
-
-			expect(config.find('.remaining-mins').text()).to.equal('11');
-			expect(config.find('.remaining-secs').text()).to.equal('07');
-		});
-
-		it('shows the remaining seconds as two digits', () => {
-			const startTimer = sinon.stub();
-			const calcRemaining = () => { return { mins: 11, secs: 7.12 }; };
-			const config = shallow(<Config startTimer={startTimer} calcRemaining={calcRemaining} setRemainingTime={()=>{}} />);
-
-			config.find('.start-timer').simulate('click');
-
-			expect(config.find('.remaining-mins').text()).to.equal('11');
-			expect(config.find('.remaining-secs').text()).to.equal('07');
 		});
 
 		it('passes the remaining milliseconds to the helper function', () => {
