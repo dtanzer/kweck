@@ -5,10 +5,12 @@ import { Config } from './Config';
 import { Background, Foreground, Slice } from './TimerComponents';
 
 
-export const Timer = createTimer(percentFrom, () => {});
+export const Timer = createTimer(percentFrom);
 
 
-export function createTimer(timeToPercentage = percentFrom, startTimer = setInterval, calcRemaining=calculateRemainingTime, currentTime=Date.now) {
+export function createTimer(timeToPercentage = percentFrom, startTimer = setInterval, calcRemaining=calculateRemainingTime, currentTime = Date.now, stopTimer = clearInterval) {
+	var runningInterval = null;
+
 	return ({ startMins=10, startSecs=0 }) => {
 		const [runningState, setRunningState] = useState('stopped');
 		const [startTime, setStartTime] = useState(0);
@@ -16,10 +18,16 @@ export function createTimer(timeToPercentage = percentFrom, startTimer = setInte
 		const [remainingTime, setRemainingTime] = useState(0);
 
 		useEffect(() => {
-			startTimer(() => {
+			if(runningInterval != null) {
+				stopTimer(runningInterval);
+			}
+
+			const iid = startTimer(() => {
 				const elapsedTime = currentTime() - startTime;
 				setRemainingTime(countDownTime - elapsedTime);
 			}, 20);
+
+			runningInterval = iid;
 		}, [startTime, countDownTime]);
 
 		const onStart = () => {

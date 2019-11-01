@@ -6,22 +6,23 @@ import { Config } from '../src/Config';
 import { shallow, mount, render } from 'enzyme';
 import sinon from 'sinon';
 
+const TestTimer = createTimer(()=>10, () => {});
 describe('Component <Timer/> rendering', () => {
 	describe('<Timer/>', () => {
 		it('renders the config panel', () => {
-			const timer = shallow(<Timer />);
+			const timer = shallow(<TestTimer />);
 			expect(timer.find(Config)).to.have.length(1);
 		});
 		it('renders the timer background', () => {
-			const timer = shallow(<Timer/>);
+			const timer = shallow(<TestTimer/>);
 			expect(timer.find(Background)).to.have.length(1);
 		});
 		it('renders the timer foreground', () => {
-			const timer = shallow(<Timer/>);
+			const timer = shallow(<TestTimer/>);
 			expect(timer.find(Foreground)).to.have.length(1);
 		});
 		it('renders a timer slice', () => {
-			const timer = shallow(<Timer/>);
+			const timer = shallow(<TestTimer/>);
 			expect(timer.find(Slice)).to.have.length(1);
 		});
 		it('passes percentLeft to slice when timer is not running', () => {
@@ -48,11 +49,11 @@ describe('Component <Timer/> rendering', () => {
 			expect(timer.find(Config).prop('remaining')).to.deep.equal({mins: 6, secs: 12.5, });
 		});
 		it('passes the running state to config when timer is stopped', () => {
-			const timer = shallow(<Timer />);
+			const timer = shallow(<TestTimer />);
 			expect(timer.find(Config).prop('status')).to.equal('stopped');
 		});
 		it('passes the running state to config when timer is running', () => {
-			const timer = mount(<Timer />);
+			const timer = mount(<TestTimer />);
 
 			timer.find(Config).prop('startTimer')();
 			timer.update();
