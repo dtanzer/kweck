@@ -51,16 +51,15 @@ export function createTimer(timeToPercentage = percentFrom, startTimer = setInte
 		}
 		const { mins, secs } = calcTime();
 
-		return (
-			<div>
-				<Config startTimer={onStart} stopTimer={onStop} status={runningState} remaining={{mins, secs}} />,
+		return [
+				<Config key='conf' startTimer={onStart} stopTimer={onStop} status={runningState} remaining={{mins, secs}} />,
 
-				<svg className="timer" viewBox="-1.1 -1.1 2.2 2.2" width="400" height="400">
+				<svg key='pie' className="timer" viewBox="-1.1 -1.1 2.2 2.2">
 					<Background />
 					<Slice percentLeft={timeToPercentage(mins, secs)}/>
 					<Foreground />
 				</svg>
-			</div>);
+			];
 	};
 }
 

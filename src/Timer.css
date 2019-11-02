@@ -1,3 +1,6 @@
+.timer {
+	height: 100%;
+}
 .timer .slice {
 	fill: red;
 	stroke: none;

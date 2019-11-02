@@ -1,0 +1,13 @@
+@media (min-aspect-ratio: 1/1) {
+	.config {
+		width: 25%;
+	}
+}
+
+.time-input input {
+	width: 1.8em;
+}
+
+.time-input input, .config, .config button {
+	font-size: 4vw;
+}
