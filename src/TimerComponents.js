@@ -5,8 +5,19 @@ export function Background() {
 	return <circle className="background" cx="0" cy="0" r="1" />;
 }
 
-export function Foreground() {
-	return <circle className="foreground" cx="0" cy="0" r="1" />;
+export function Foreground({circleSegment = segmentTo}) {
+	const minutesLines = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55].map(mins => {
+		const percent = 100*mins/60;
+		const [startX, startY] = circleSegment(percent, 1);
+		const [endX, endY] = circleSegment(percent, 0.95);
+		return <path key={mins} className={`minutes-line-${mins} foreground`} d={`M ${startX} ${startY} L ${endX} ${endY}`} />
+	});
+	return (
+		<g>
+			{minutesLines}
+			<circle className="foreground" cx="0" cy="0" r="1" />
+		</g>
+	);
 }
 
 export const Slice = createSlice();

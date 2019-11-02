@@ -34,4 +34,25 @@ describe('segment', () => {
 			expect(y).to.be.closeTo(0, 0.001);
 		});
 	});
+
+	describe('segmentTo with 90%', () => {
+		it('returns the topmost point of the circle for 0%', () => {
+			const [x, y] = segmentTo(0, .9);
+
+			expect(x).to.be.closeTo(0, 0.001);
+			expect(y).to.be.closeTo(-.9, 0.001);
+		});
+		it('returns the bottommost point of the circle for 50%', () => {
+			const [x, y] = segmentTo(50, .9);
+
+			expect(x).to.be.closeTo(0, 0.001);
+			expect(y).to.be.closeTo(.9, 0.001);
+		});
+		it('returns the leftmmost point of the circle for 25%', () => {
+			const [x, y] = segmentTo(25, .9);
+
+			expect(x).to.be.closeTo(-.9, 0.001);
+			expect(y).to.be.closeTo(0, 0.001);
+		});
+	});
 });
