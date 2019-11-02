@@ -45,21 +45,37 @@ describe('Config component', () => {
 		});
 
 		it('shows the remaining time, as passed in from the parent, when the timer is running', () => {
-			const startTimer = sinon.stub();
-
-			const config = shallow(<Config startTimer={startTimer} remaining={{mins: 8, secs: 5}} status="running" />);
+			const config = shallow(<Config remaining={{mins: 8, secs: 5}} status="running" />);
 
 			expect(config.find('.remaining-mins').text()).to.equal('08');
 			expect(config.find('.remaining-secs').text()).to.equal('05');
 		});
-
 		it('shows the remaining seconds without msec when the timer is running', () => {
-			const startTimer = sinon.stub();
-
-			const config = shallow(<Config startTimer={startTimer} remaining={{mins: 8, secs: 3.2}} status="running" />);
+			const config = shallow(<Config remaining={{mins: 8, secs: 3.2}} status="running" />);
 
 			expect(config.find('.remaining-mins').text()).to.equal('08');
 			expect(config.find('.remaining-secs').text()).to.equal('03');
+		});
+		it('does not show the remaining time when the timer is stopped', () => {
+			const config = shallow(<Config remaining={{mins: 8, secs: 3.2}} status="stopped" />);
+
+			expect(config.find('.remaining-time')).to.have.length(0);
+		});
+
+		it('passes the values of the time input to the start function when start is clicked', () => {
+			const startTimer = sinon.stub();
+			const config = shallow(<Config startTimer={startTimer} status="stopped" />);
+
+			config.find('.time-input .mins').simulate('change', { target: { value: '12' } });
+			config.find('.time-input .secs').simulate('change', { target: { value: '8' } });
+			config.find('.start-timer').simulate('click');
+
+			sinon.assert.calledWith(startTimer, 12, 8);
+		});
+		it('does not show the time input when the timer is running', () => {
+			const config = shallow(<Config status="running" />);
+
+			expect(config.find('.time-input')).to.have.length(0);
 		});
 	});
 });

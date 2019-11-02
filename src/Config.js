@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 export function calculateRemainingTime(milliseconds) {
 	const mins = Math.floor(milliseconds / (60*1000));
@@ -16,14 +16,37 @@ export function Config({
 		status,
 	}) {
 
+	const [minutes, setMinutes] = useState(10);
+	const [seconds, setSeconds] = useState(0);
+
+	const showRemainingTime = () => {
+		if(status !== 'stopped') {
+			return (
+				<div className="remaining-time">
+					<span className="remaining-mins">{remaining.mins.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}</span>
+					:
+					<span className="remaining-secs">{Math.floor(remaining.secs).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}</span>
+				</div>);
+		}
+		return null;
+	}
+
+	const showTimeInput = () => {
+		if(status === 'stopped') {
+			return (
+				<div className="time-input">
+					<input className="mins" type="number" onChange={e => setMinutes(parseInt(e.target.value))} value={minutes} />
+					:
+					<input className="secs" type="number" onChange={e => setSeconds(parseInt(e.target.value))} value={seconds} />
+				</div>);
+		}
+		return null;
+	}
 	return (
 		<div>
-			<div>
-				<span className="remaining-mins">{remaining.mins.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}</span>
-				:
-				<span className="remaining-secs">{Math.floor(remaining.secs).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}</span>
-			</div>
-			<button className="start-timer" onClick={startTimer} disabled={status !== 'stopped'}>Start</button>
+			{showTimeInput()}
+			{showRemainingTime()}
+			<button className="start-timer" onClick={() => startTimer(minutes, seconds)} disabled={status !== 'stopped'}>Start</button>
 			<button className="stop-timer" onClick={stopTimer} disabled={status === 'stopped'}>Stop</button>
 		</div>
 	);

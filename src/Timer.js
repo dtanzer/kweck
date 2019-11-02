@@ -30,8 +30,11 @@ export function createTimer(timeToPercentage = percentFrom, startTimer = setInte
 			runningInterval = iid;
 		}, [startTime, countDownTime]);
 
-		const onStart = () => {
+		const onStart = (mins, secs) => {
+			const newCountDownTime = mins*60*1000 + secs*1000;
+			setCountDownTime(newCountDownTime);
 			setStartTime(currentTime());
+			setRemainingTime(newCountDownTime);
 			setRunningState('running');
 		};
 

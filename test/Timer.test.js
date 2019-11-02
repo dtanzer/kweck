@@ -1,5 +1,6 @@
 import React from 'react';
-import { Timer, createTimer, calculateRemainingTime } from '../src/Timer';
+import { createTimer, calculateRemainingTime } from '../src/Timer';
+import { percentFrom } from '../src/segment';
 import { Background, Foreground, Slice } from '../src/TimerComponents';
 import { Config } from '../src/Config';
 
@@ -64,6 +65,15 @@ describe('Component <Timer/> rendering', () => {
 			timer.update();
 
 			expect(timer.find(Config).prop('status')).to.equal('running');
+		});
+		it('sets the count down time when start was pressed', () => {
+			const TimerComp = createTimer(percentFrom, ()=>{});
+			const timer = mount(<TimerComp />);
+
+			timer.find(Config).prop('startTimer')(15, 0);
+			timer.update();
+
+			expect(timer.find(Slice).prop('percentLeft')).to.be.closeTo(25, 0.001);
 		});
 		it('passes a stop function to <Config />', () => {
 			const timer = mount(<TestTimer />);
