@@ -52,6 +52,11 @@ describe('Component <Timer/> rendering', () => {
 			const timer = shallow(<TestTimer />);
 			expect(timer.find(Config).prop('status')).to.equal('stopped');
 		});
+		it('passes a start function to <Config />', () => {
+			const timer = mount(<TestTimer />);
+
+			expect(typeof(timer.find(Config).prop('startTimer'))).to.equal('function');
+		});
 		it('passes the running state to config when timer is running', () => {
 			const timer = mount(<TestTimer />);
 
@@ -59,6 +64,21 @@ describe('Component <Timer/> rendering', () => {
 			timer.update();
 
 			expect(timer.find(Config).prop('status')).to.equal('running');
+		});
+		it('passes a stop function to <Config />', () => {
+			const timer = mount(<TestTimer />);
+
+			expect(typeof(timer.find(Config).prop('stopTimer'))).to.equal('function');
+		});
+		it('stops a running timer when calling the stop function', () => {
+			const timer = mount(<TestTimer />);
+
+			timer.find(Config).prop('startTimer')();
+			timer.update();
+			timer.find(Config).prop('stopTimer')();
+			timer.update();
+
+			expect(timer.find(Config).prop('status')).to.equal('stopped');
 		});
 	});
 

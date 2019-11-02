@@ -35,6 +35,11 @@ export function createTimer(timeToPercentage = percentFrom, startTimer = setInte
 			setRunningState('running');
 		};
 
+		const onStop = () => {
+			setStartTime(0);
+			setRunningState('stopped');
+		};
+
 		const calcTime = () => {
 			if(runningState === 'running') {
 				return calcRemaining(remainingTime);
@@ -44,7 +49,7 @@ export function createTimer(timeToPercentage = percentFrom, startTimer = setInte
 		const { mins, secs } = calcTime();
 
 		return [
-			<Config startTimer={onStart} status={runningState} remaining={{mins, secs}} />,
+			<Config startTimer={onStart} stopTimer={onStop} status={runningState} remaining={{mins, secs}} />,
 
 			<svg className="timer" viewBox="-1.1 -1.1 2.2 2.2" width="400" height="400">
 				<Background />

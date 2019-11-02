@@ -11,6 +11,7 @@ export function calculateRemainingTime(milliseconds) {
 
 export function Config({
 		startTimer=()=>{},
+		stopTimer=()=>{},
 		remaining={mins: 11, secs: 7},
 		status,
 	}) {
@@ -22,7 +23,8 @@ export function Config({
 				:
 				<span className="remaining-secs">{Math.floor(remaining.secs).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}</span>
 			</div>
-			<button className="start-timer" onClick={startTimer} disabled={status!=='stopped'}>Start</button>
+			<button className="start-timer" onClick={startTimer} disabled={status !== 'stopped'}>Start</button>
+			<button className="stop-timer" onClick={stopTimer} disabled={status === 'stopped'}>Stop</button>
 		</div>
 	);
 }
