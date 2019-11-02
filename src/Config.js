@@ -22,7 +22,7 @@ export function Config({
 				:
 				<span className="remaining-secs">{Math.floor(remaining.secs).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}</span>
 			</div>
-			<button className="start-timer" onClick={startTimer}>Start</button>
+			<button className="start-timer" onClick={startTimer} disabled={status!=='stopped'}>Start</button>
 		</div>
 	);
 }

@@ -15,6 +15,19 @@ describe('Config component', () => {
 			sinon.assert.called(startTimer);
 		});
 
+		it('renders the start button disabled when the timer is running', () => {
+			const startTimer = sinon.stub();
+			const config = shallow(<Config startTimer={startTimer} status="running" />);
+
+			expect(config.find('.start-timer').prop('disabled')).to.equal(true);
+		});
+		it('renders the start button not disabled when the timer is stopped', () => {
+			const startTimer = sinon.stub();
+			const config = shallow(<Config startTimer={startTimer} status="stopped" />);
+
+			expect(config.find('.start-timer').prop('disabled')).to.equal(false);
+		});
+
 		it('shows the remaining time, as passed in from the parent, when the timer is running', () => {
 			const startTimer = sinon.stub();
 
