@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Timer.css';
-import { percentFrom, segmentTo } from './segment';
+import { percentFrom } from './segment';
 import { Config } from './Config';
 import { Background, Foreground, Slice } from './TimerComponents';
 
@@ -11,7 +11,7 @@ export const Timer = createTimer(percentFrom);
 export function createTimer(timeToPercentage = percentFrom, startTimer = setInterval, calcRemaining=calculateRemainingTime, currentTime = Date.now, stopTimer = clearInterval) {
 	var runningInterval = null;
 
-	return ({ startMins=10, startSecs=0 }) => {
+	return () => {
 		const [runningState, setRunningState] = useState('stopped');
 		const [startTime, setStartTime] = useState(0);
 		const [countDownTime, setCountDownTime] = useState(10*60*1000);

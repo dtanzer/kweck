@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 export function calculateRemainingTime(milliseconds) {
 	const mins = Math.floor(milliseconds / (60*1000));
@@ -11,7 +11,8 @@ export function calculateRemainingTime(milliseconds) {
 
 export function Config({
 		startTimer=()=>{},
-		remaining={mins: 11, secs: 7}
+		remaining={mins: 11, secs: 7},
+		status,
 	}) {
 
 	return (
@@ -21,7 +22,7 @@ export function Config({
 				:
 				<span className="remaining-secs">{Math.floor(remaining.secs).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}</span>
 			</div>
-			<a className="start-timer" href="#" onClick={startTimer}>Start</a>
+			<button className="start-timer" onClick={startTimer}>Start</button>
 		</div>
 	);
 }
