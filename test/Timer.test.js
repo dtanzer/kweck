@@ -104,6 +104,36 @@ describe('Component <Timer/> rendering', () => {
 			sinon.assert.called(startTimer);
 			expect(typeof(startTimer.getCall(0).args[0])).to.equal('function');
 		});
+		it('stops any running timer interval before starting a new one', () => {
+			const intervalId = 17;
+			const startTimer = sinon.stub();
+			startTimer.returns(intervalId);
+			const stopTimer = sinon.stub()
+			const TimerComp = createTimer(timeToPercentage, startTimer, ()=>{ return {mins:0, secs:0}}, ()=>0, stopTimer);
+			
+			const timer = mount(<TimerComp />);
+			timer.find(Config).prop('startTimer')();
+			timer.update();
+
+			sinon.assert.calledWith(stopTimer, intervalId);
+		});
+		it('updates the remaining time in the timer interval callback', () => {
+			const startTimer = sinon.stub();
+			const calcRemaining = sinon.stub();
+			calcRemaining.returns({mins:0, secs:0});
+			const time = 150;
+			const currentTime = sinon.stub().returns(time);
+			const TimerComp = createTimer(timeToPercentage, startTimer, calcRemaining, currentTime);
+			
+			const timer = mount(<TimerComp />);
+			timer.find(Config).prop('startTimer')();
+			timer.update();
+
+			const intervalCallback = startTimer.getCall(0).args[0];
+			intervalCallback();
+
+			sinon.assert.calledWith(calcRemaining, 10*60*1000 - time);
+		});
 
 		it('uses count down time to calculate minutes and seconds when timer is stopped', () => {
 			const startTimer = sinon.stub();
@@ -115,7 +145,7 @@ describe('Component <Timer/> rendering', () => {
 
 			sinon.assert.calledWith(calcRemaining, 10*60*1000);
 		});
-		it('uses remaining time to calculate minutes and seconds when timer is stopped', () => {
+		it('uses remaining time to calculate minutes and seconds when timer is not stopped', () => {
 			const startTimer = sinon.stub();
 			const calcRemaining = sinon.stub();
 			calcRemaining.returns({mins: 0, secs: 0 });
