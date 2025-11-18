@@ -18,7 +18,7 @@
     "enzyme-adapter-react-16": "^1.15.1",
     "ignore-styles": "^5.0.1",
     "jsdom": "^15.2.0",
-    "mocha": "^6.2.2",
+    "mocha": "^11.7.5",
     "sinon": "^7.5.0"
   },
   "scripts": {
